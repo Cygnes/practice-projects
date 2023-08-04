@@ -4,7 +4,7 @@
 import sys
 import pyperclip
 
-encryptText = {
+cipherText = {
     'a': 'd',
     'b': 'e',
     'c': 'f',
@@ -34,35 +34,6 @@ encryptText = {
     ' ': ' ', # white space text to avoid errors
 }
 
-decryptText = {
-    'd': 'a',
-    'e': 'b',
-    'f': 'c',
-    'g': 'd',
-    'h': 'e',
-    'i': 'f',
-    'j': 'g',
-    'k': 'h',
-    'l': 'i',
-    'm': 'j',
-    'n': 'k',
-    'o': 'l',
-    'p': 'm',
-    'q': 'n',
-    'r': 'o',
-    's': 'p',
-    't': 'q',
-    'u': 'r',
-    'v': 's',
-    'w': 't',
-    'x': 'u',
-    'y': 'v',
-    'z': 'w',
-    'a': 'x',
-    'b': 'y',
-    'c': 'z',
-    ' ': ' ', # white space text to avoid errors
-}
 
 if len(sys.argv) < 2: # shows the feature of the program 
     print("Usage: caesarCipher.py - encodes/decodes text in shift +3 encryption")
@@ -82,14 +53,16 @@ processedText = list(text)
 
 finalText = [] # change the processedText to be encoded/decoded
 if functionCipher.startswith("encode"): # encodes the pasted text
-    for letters in processedText:
-        if letters in encryptText.keys():
-            finalText.append(encryptText[letters])
+    for text in processedText:
+        for k, v in cipherText.items():
+            if text == k:
+                finalText.append(v)
     print("Encrypted text copied to clipboard")
 elif functionCipher.startswith("decode"): # decodes the pasted text
-    for letters in processedText:
-        if letters in decryptText.keys():
-            finalText.append(decryptText[letters])
+    for text in processedText:
+        for v, k in cipherText.items():
+            if text == k:
+                finalText.append(v)
     print("Decrypted text copied to clipboard")
 else:
     print("Error: function argument does not exist")

@@ -34,39 +34,52 @@ cipherText = {
     ' ': ' ', # white space text to avoid errors
 }
 
-
-if len(sys.argv) < 2: # shows the feature of the program 
-    print("Usage: caesarCipher.py - encodes/decodes text in shift +3 encryption")
-    sys.exit()
-
-functionCipher = sys.argv[1] # terminal argument if user wants to encode/decode a text 
-text = pyperclip.paste() # pasted text to be decoded/encoded
-
-# avoids decimal and special characters from the pasted text
-if text.isdecimal():
-    print('Text must only have letters not numerical characters, please try again')
-    sys.exit()
-
-# splits the text to be decode/encoded
-processedText = list(text)
-
-
-finalText = [] # change the processedText to be encoded/decoded
-if functionCipher.startswith("encode"): # encodes the pasted text
+def encodeText(cipherText, processedText):
+    finalText = []
     for text in processedText:
         for k, v in cipherText.items():
             if text == k:
                 finalText.append(v)
-    print("Encrypted text copied to clipboard")
-elif functionCipher.startswith("decode"): # decodes the pasted text
+
+    return ''.join(finalText)
+
+def decodeText(cipherText, processedText):
+    finalText = []
     for text in processedText:
         for v, k in cipherText.items():
             if text == k:
                 finalText.append(v)
-    print("Decrypted text copied to clipboard")
-else:
-    print("Error: function argument does not exist")
-    sys.exit()
+    
+    return ''.join(finalText)
 
-text = ''.join(finalText) # joins the final result of the encoded/decoded text
-pyperclip.copy(text)
+def main():
+    if len(sys.argv) < 2: # shows the feature of the program 
+        print("Usage: caesarCipher.py - encodes/decodes text in shift +3 encryption")
+        sys.exit()
+
+    functionCipher = sys.argv[1] # terminal argument if user wants to encode/decode a text 
+    text = pyperclip.paste() # pasted text to be decoded/encoded
+
+    # avoids decimal and special characters from the pasted text
+    if text.isdecimal():
+        print('Text must only have letters not numerical characters, please try again')
+        sys.exit()
+
+    # splits the text to be decode/encoded
+    processedText = list(text)
+
+
+    if functionCipher == "encode": # encodes the pasted text
+        text = encodeText(cipherText, processedText)
+        print("Encrypted text copied to clipboard")
+    elif functionCipher == "decode": # decodes the pasted text
+        text = decodeText(cipherText, processedText) 
+        print("Decrypted text copied to clipboard")
+    else:
+        print("Error: function argument does not exist")
+        sys.exit()
+    
+    pyperclip.copy(text)
+
+if __name__ == "__main__":
+    main()
